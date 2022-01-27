@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <style>
+        .form{
+            
+        }
+        .form .form2{
+            padding: px;
+            margin-left: px;        
+        }
+        .form3{
+            padding: px;
+        }
+        .form4{
+            padding: px;
+        }
+        .form5{
+            padding: px;
+        }
+        .message-box {
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            text-align: center;
+            background-color: rgba(0, 0, 0, .3)
+        }
+        
+        .message-box::after {
+            content: "";
+            display: inline-block;
+            height: 100%;
+            width: 0;
+            vertical-align: middle;
+        }
+        
+        .box {
+            display: inline-block;
+            vertical-align: middle;
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #ffffff;
+        }
+        
+        .content {
+            padding: 30px 20px;
+        }
+        
+        .btns {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+        }
+        
+        
+        .confirm {
+            float: left;
+            width: 50%;
+            height: 100%;
+            line-height: 50px;
+            color: #ffffff;
+            margin-left: -7%;
+        }
+        .cancel {
+            float: left;
+            width: 50%;
+            height: 100%;
+            line-height: 50px;
+            color: #ffffff;
+        }
+        .cancel {
+            background-color: #8f9498;
+        }
+        
+        .confirm {
+            background-color: #FF6400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="">
+            <h3 class="">添加品牌</h3>
+        </div>
+        <div class="">
+            <label>
+                搜索: <input type="text" v-model="serch" v-model="search" />
+            </label>
+            <span class="" @click="window()">添加</span>
+        </div>
+        
+        <div id="" v-show="flag" class="message-box">
+            <div class="box">
+                <div id="dialog" class="">
+                    添加
+                    <span @click="flag=false">x</span>
+                </div>
+                <div class="header"></div>
+                <div class="content">
+                            <input type="text" v-model="id" placeholder="id" /> <br>
+                            <input type="text" v-model="name"  placeholder="name"/> <br>
+                            <input type="text" v-model="date" placeholder="date" /> <br>
+                <div class="btns">
+                        <button @click="add()" class="confirm">保存</button>
+                        <button @click="flag=false" class="cancel">取消</button>
+                </div>
+                </div>
+            </div>
+        </div>
+        <table cellpadding="0" cellspacing="0">
+            <div class="form">
+            <thead >
+                <tr class="">
+                    <th class="form2">id</th> 
+                    <th class="form3">Name</th>
+                    <th class="form4">date</th>
+                    <th class="form5">操作</th>
+                </tr>
+            </thead>
+            </div>
+            <tbody>
+                <!-- 之前从list中直接渲染过来，现在自定义search方法，把关键字传递给search -->
+                <tr v-for="(list,index) in lists">
+                    <td>{{index+1}}</td>
+                    <td>{{list.id}}</td>
+                    <td>{{list.name}}</td>
+                    <td>{{list.date}}</td>
+                    <td>
+                        <span class="delete" @click="del(list,index)">删除</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--组件-->
+
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                flag:false,//弹出，显示与隐藏
+                id:'',
+                name:'',
+                date:'',
+                lists:[
+                    {id:'1',name:'2',date:'3',_id:1}
+                ]    
+            },
+            methods:{
+                add(){
+
+                    //点击添加前判断输入框是否为空
+                    if(!this.id||!this.name||!this.date) return;
+                    //通过数据双向绑定将vue的数据应用到页面上
+                    this.lists.push({id:this.id,name:this.name,date:this.date,_id:this._id});
+                    //清空输入框
+                    this.id='';
+                    this.name='';
+                    this.date='';
+                },
+                del(list,index){
+                    this.lists.splice(index,1);//下标索引
+                },
+                window(){
+                    this.flag=true;
+                },
+            }
+        })
+    </script>
+</body>
+</html>
